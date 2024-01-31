@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Simular la actividad de los routes</title>
+</head>
+<body>
+
+<script>
+
+var rutas = [
+  { origen: "A", destino: "B", coste: 1 },
+  { origen: "A", destino: "C", coste: 2 },
+  { origen: "B", destino: "C", coste: 3 },
+  { origen: "C", destino: "D", coste: 4 },
+];
+
+function desconectarEnlace(origen, destino) {
+  for (var i = 0; i < rutas.length; i++) {
+    if (rutas[i].origen == origen && rutas[i].destino == destino) {
+      rutas.splice(i, 1);
+      break;
+    }
+  }
+}
+
+function calcularNuevasRutas() {
+  for (var i = 0; i < rutas.length; i++) {
+    for (var j = 0; j < rutas.length; j++) {
+      if (i != j) {
+        var nuevaRuta = {
+          origen: rutas[i].origen,
+          destino: rutas[j].destino,
+          coste: rutas[i].coste + rutas[j].coste,
+        };
+        if (!hayRuta(nuevaRuta)) {
+          rutas.push(nuevaRuta);
+        }
+      }
+    }
+  }
+}
+
+function hayRuta(ruta) {
+  for (var i = 0; i < rutas.length; i++) {
+    if (rutas[i].origen == ruta.origen && rutas[i].destino == ruta.destino) {
+      return true;
+    }
+  }
+  return false;
+}
+
+function imprimirRutas() {
+  for (var i = 0; i < rutas.length; i++) {
+    var ruta = rutas[i];
+    document.write("Origen: " + ruta.origen + " - Destino: " + ruta.destino + " - Coste: " + ruta.coste + "<br>");
+  }
+}
+
+desconectarEnlace("A", "C");
+calcularNuevasRutas();
+imprimirRutas();
+
+</script>
+
+</body>
+</html>
